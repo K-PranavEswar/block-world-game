@@ -1,0 +1,97 @@
+/* 1. IMPORT TECH FONT (Optional but recommended) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+  /* Disable highlight on tap for mobile buttons */
+  -webkit-tap-highlight-color: transparent; 
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  
+  /* Deep Blue Background Base */
+  background-color: #020617; 
+  
+  /* Tech Font Stack */
+  font-family: 'Roboto Mono', 'Courier New', monospace; 
+  
+  /* PREVENT BOUNCING SCROLL ON MOBILE */
+  overscroll-behavior: none;
+  overflow: hidden; 
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* --- GLOBAL BUTTON STYLES --- */
+button {
+  font-family: inherit;
+  user-select: none; /* Stop user from selecting button text */
+}
+
+button:focus {
+  outline: 2px solid #38bdf8; /* Accessible blue focus ring */
+  outline-offset: 2px;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* --- SCROLLBAR STYLING (For the Goal Sidebar) --- */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+
+/* Chrome / Safari / Edge */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #334155;
+  border-radius: 10px;
+}
+
+/* --- GLOBAL ANIMATIONS --- */
+
+/* 1. Pop In (For Move Counter) */
+@keyframes popIn {
+  0% { transform: scale(1.4); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 2. Blink (For Timer Colon) */
+@keyframes blink {
+  0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+  50% { opacity: 0.2; text-shadow: none; }
+}
+
+/* 3. Modal Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Subtle Float (Optional for visual polish) */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
