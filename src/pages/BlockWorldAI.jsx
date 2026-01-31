@@ -5,7 +5,7 @@ import GoalState from "../components/GoalState"
 import Timer from "../components/Timer"
 import MoveCounter from "../components/MoveCounter"
 import ResultModal from "../components/ResultModal"
-import "../app.css"
+import "../App.css"
 
 const ID_TO_COLOR = {
   1: "#ef4444", 2: "#3b82f6", 3: "#22c55e", 
