@@ -5,7 +5,7 @@ import GoalState from "../components/GoalState"
 import Timer from "../components/Timer"
 import MoveCounter from "../components/MoveCounter"
 import ResultModal from "../components/ResultModal"
-import "../App.css"
+import "../app.css"
 
 const ID_TO_COLOR = {
   1: "#ef4444", 2: "#3b82f6", 3: "#22c55e", 
@@ -31,15 +31,14 @@ const generateRandomState = () => {
     let attempts = 0;
     while(!inserted && attempts < 10) {
       const r = Math.floor(Math.random() * 3);
-      // UPDATED: Allow up to 5 blocks in a stack for randomization
-      if (stacks[r].length < 5) {
+      if (stacks[r].length < 4) {
         stacks[r].push(block);
         inserted = true;
       }
       attempts++;
     }
     if (!inserted) {
-      const available = stacks.find(s => s.length < 5);
+      const available = stacks.find(s => s.length < 4);
       if (available) available.push(block);
     }
   });
@@ -65,8 +64,9 @@ export default function BlockWorldAI() {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const isMobile = width < 900;
-  const gameScale = isMobile ? Math.min(width / 450, 1) : 1;
+  // Mobile Breakpoint
+  const isMobile = width < 768;
+  const gameScale = isMobile ? Math.min(width / 420, 1) : 1; // Slightly adjusted scale divisor
 
   useEffect(() => {
     if (completed) return;
@@ -81,8 +81,7 @@ export default function BlockWorldAI() {
       if (nextStacks[i].length === 0) return;
       setHeld(nextStacks[i].pop());
     } else {
-      // UPDATED: Allow player to stack up to 5 blocks
-      if (nextStacks[i].length >= 5) return;
+      if (nextStacks[i].length >= 4) return;
       nextStacks[i].push(held);
       setHeld(null);
       setMoves(m => m + 1);
@@ -103,10 +102,23 @@ export default function BlockWorldAI() {
   return (
     <div style={styles.page}>
       
-      {/* HEADER */}
-      <div style={styles.dashboard}>
-         <div style={styles.headerLeft}>
-            <h1 style={styles.title}>BLOCK WORLD AI</h1>
+      {/* HEADER: Updated with dynamic styles for mobile */}
+      <div style={{
+          ...styles.dashboard,
+          flexDirection: isMobile ? "column" : "row",
+          padding: isMobile ? "12px 16px" : "12px 24px",
+          gap: isMobile ? "12px" : "0",
+          height: "auto"
+      }}>
+         <div style={{
+             ...styles.headerLeft,
+             alignItems: isMobile ? "center" : "flex-start",
+             width: isMobile ? "100%" : "auto"
+         }}>
+            <h1 style={{
+                ...styles.title,
+                fontSize: isMobile ? "20px" : "22px"
+            }}>BLOCK WORLD AI</h1>
             <div style={styles.statusBadge}>
                 <div style={{
                     ...styles.statusDot,
@@ -117,7 +129,12 @@ export default function BlockWorldAI() {
             </div>
          </div>
 
-         <div style={styles.statsRow}>
+         <div style={{
+             ...styles.statsRow,
+             marginLeft: isMobile ? "0" : "auto",
+             justifyContent: "center",
+             width: isMobile ? "100%" : "auto"
+         }}>
             <Timer time={time} />
             <MoveCounter moves={moves} />
          </div>
@@ -125,7 +142,7 @@ export default function BlockWorldAI() {
 
       <div style={styles.mainStack}>
         
-        {/* GOAL (Top) */}
+        {/* GOAL ZONE */}
         <div style={styles.goalZone}>
            <div style={styles.goalInner}>
              <GoalState 
@@ -172,12 +189,24 @@ export default function BlockWorldAI() {
 
 const styles = {
   page: { height: "100vh", backgroundColor: "#020617", display: "flex", flexDirection: "column", overflow: "hidden" },
-  dashboard: { backgroundColor: "#0f172a", borderBottom: "1px solid #1e293b", padding: "12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 50 },
+  
+  // Dashboard base styles (Dynamic parts handled inline above)
+  dashboard: { 
+    backgroundColor: "#0f172a", 
+    borderBottom: "1px solid #1e293b", 
+    display: "flex", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    zIndex: 50,
+    flexShrink: 0 
+  },
+  
   headerLeft: { display: "flex", flexDirection: "column", gap: "6px" },
-  title: { margin: 0, fontSize: "22px", fontFamily: "'Roboto Mono', monospace", color: "#ffffff", textShadow: "0 0 12px rgba(56, 189, 248, 0.6)", fontWeight: "800", letterSpacing: "1px" },
+  title: { margin: 0, fontFamily: "'Roboto Mono', monospace", color: "#ffffff", textShadow: "0 0 12px rgba(56, 189, 248, 0.6)", fontWeight: "800", letterSpacing: "1px" },
   statusBadge: { display: "flex", alignItems: "center", gap: "8px", fontSize: "10px", fontFamily: "'Roboto Mono', monospace", color: "#94a3b8", fontWeight: "bold" },
   statusDot: { width: "6px", height: "6px", borderRadius: "50%", transition: "background-color 0.3s" },
-  statsRow: { display: "flex", gap: "12px", marginLeft: "auto" },
+  statsRow: { display: "flex", gap: "12px" },
+
   mainStack: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" },
   
   goalZone: { 
@@ -195,8 +224,7 @@ const styles = {
     maxWidth: "800px", 
     display: "flex", 
     justifyContent: "center",
-    // SCALED UP to 1.0 (Normal size) so it looks "large" and clear
-    transform: "scale(1.0)",
+    transform: "scale(0.85)",
     transformOrigin: "center"
   },
 
