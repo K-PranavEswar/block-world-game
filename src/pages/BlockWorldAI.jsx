@@ -211,7 +211,7 @@ export default function BlockWorldAI() {
               <div style={{ fontSize: "20px", color: "#475569", fontWeight: "bold" }}>TIMER</div>
               <div style={{ fontSize: "20px", color: "#38bdf8", fontWeight: "bold" }}>{formatTime(time)}</div>
             </div>
-            <GoalState stacks={goal.map(toColors)} title="TARGET STATE" />
+            <GoalState stacks={goal.map(toColors)} title="GOAL STATE" />
             <div style={{ textAlign: "center", minWidth: "80px" }}>
               <div style={{ fontSize: "20px", color: "#475569", fontWeight: "bold" }}>MOVES</div>
               <div style={{ fontSize: "20px", color: "#38bdf8", fontWeight: "bold"}}>{moves.toString().padStart(3, '0')}</div>
