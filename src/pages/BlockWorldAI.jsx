@@ -3,7 +3,7 @@ import Arm from "../components/Arm"
 import TestTube from "../components/TestTube"
 import GoalState from "../components/GoalState"
 import ResultModal from "../components/ResultModal"
-import "../app.css"
+import "../App.css"
 
 // --- CONSTANTS & HELPERS ---
 const ID_TO_COLOR = {
